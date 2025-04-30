@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app import google_oauth, calendar_service
+from app import google_oauth
+from app.api.google_routes import router as google_router
 
 app = FastAPI()
 
@@ -17,5 +18,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(google_oauth.router)
-app.include_router(calendar_service.router)
+app.include_router(google_oauth.router, prefix="/api/google", tags=["Google OAuth"])
+app.include_router(google_router, prefix="/api/google", tags=["Google API"])
