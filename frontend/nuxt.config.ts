@@ -10,6 +10,9 @@ export default defineNuxtConfig({
     ],
   },
   css: ['~/assets/css/main.css'],
+  build: {
+    transpile: ['lucide-vue-next']
+  },
   modules: [
     '@nuxt/content',
     '@nuxt/eslint',
