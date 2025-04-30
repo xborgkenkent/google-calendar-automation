@@ -1,3 +1,7 @@
+![image](https://github.com/user-attachments/assets/762c5d25-5e97-4394-82f2-050df6e96244)
+![image](https://github.com/user-attachments/assets/6db557e5-a611-4440-8ca8-167b7cd9cb77)
+
+
 # Setup Instructions
 
 These instructions will guide you through setting up the development environment for this project, which includes a Python/FastAPI backend and a Nuxt.js frontend.
