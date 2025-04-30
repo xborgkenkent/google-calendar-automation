@@ -4,7 +4,11 @@
 
 # Setup Instructions
 
-These instructions will guide you through setting up the development environment for this project, which includes a Python/FastAPI backend and a Nuxt.js frontend.
+# Enable Google Calendar API
+You can find detailed instructions on how to enable the Google Calendar API and create the necessary credentials by following this link:
+[Google Calendar API Guide]([https://www.google.com/search?q=https://developers.google.com/calendar/api/quickstart/python%23step_1_turn_on_the](https://developers.google.com/workspace/calendar/api/quickstart/nodejs))
+
+This guide will walk you through the process in the Google Cloud Console. After setting up your credentials, proceed with the backend setup below.
 
 ## Backend Setup (FastAPI)
 
