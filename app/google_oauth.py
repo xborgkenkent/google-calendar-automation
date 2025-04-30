@@ -24,7 +24,7 @@ SCOPES = [
 ]
 REDIRECT_URI = "http://127.0.0.1:8000/api/google/callback/"
 
-@router.get("/api/google/init")
+@router.get("/init")
 def authorize():
     """Initialize the OAuth flow and redirect user to Google's consent page"""
     try:
@@ -48,7 +48,7 @@ def authorize():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Authorization initialization failed: {str(e)}")
 
-@router.get("/api/google/callback/")
+@router.get("/callback/")
 async def oauth2callback(request: Request):
     """Handle the OAuth callback from Google"""
     try:
@@ -101,7 +101,7 @@ def get_credentials():
         scopes=stored["scopes"]
     )
 
-@router.get("/api/google/auth-status")
+@router.get("/auth-status")
 def auth_status():
     """Check if user is authenticated with Google"""
     creds = get_credentials()
