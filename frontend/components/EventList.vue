@@ -5,12 +5,12 @@
       <p class="text-gray-500 text-lg">No events scheduled</p>
     </div>
     <div v-else class="space-y-4">
-      <div v-for="event in events" :key="event.id" class="bg-white border rounded-lg shadow-sm hover:shadow-md">
+      <div v-for="event in events" :key="event.id" class="bg-white border border-gray-300 rounded-lg shadow-sm hover:shadow-md">
         <div class="p-4 flex justify-between">
           <div>
-            <h3 class="font-semibold text-lg">{{ event.summary }}</h3>
+            <h3 class="font-semibold text-gray-600 text-lg">{{ event.summary }}</h3>
             <p class="text-sm text-gray-600">{{ formatEvent(event) }}</p>
-            <p v-if="event.description" class="text-sm mt-2 line-clamp-2">{{ event.description }}</p>
+            <p v-if="event.description" class="text-sm mt-2 text-gray-600 line-clamp-2">{{ event.description }}</p>
           </div>
           <button @click="$emit('delete', event.id)" class="text-gray-400 hover:text-red-500">
             <Trash2 :size="16" />
@@ -22,12 +22,13 @@
 </template>
 
 <script setup lang="ts">
-import { Trash2, Calendar } from 'lucide-vue-next';
-import { formatDate, formatTime } from '@/utils/dateTime';
+import { Trash2, Calendar } from 'lucide-vue-next'
+import { formatDate, formatTime } from '~/utils/dateTime'
+import type {CalendarEvent} from "~/types/Event"
 
-defineProps({ events: Array });
+defineProps({ events: Array })
 
-const formatEvent = (event) => {
-  return `${formatDate(event.start.dateTime)} | ${formatTime(event.start.dateTime)} - ${formatTime(event.end.dateTime)}`;
-};
+const formatEvent = (event: CalendarEvent) => {
+  return `${formatDate(event.start.dateTime)} | ${formatTime(event.start.dateTime)} - ${formatTime(event.end.dateTime)}`
+}
 </script>
