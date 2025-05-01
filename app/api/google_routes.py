@@ -12,20 +12,6 @@ def list_events():
         service = get_calendar_service()
         result = service.events().list(calendarId="primary", maxResults=10, singleEvents=True, orderBy="startTime").execute()
         events = result.get("items", [])
-        
-        # filtered_events = []
-        # for event in events:
-        #     filtered_event = {
-        #         "id": event.get("id"),
-        #         "summary": event.get("summary"),
-        #         "start": event.get("start", {}).get("dateTime", event.get("start", {}).get("date")),
-        #         "end": event.get("end", {}).get("dateTime", event.get("end", {}).get("date")),
-        #         "description": event.get("description"),
-        #         "location": event.get("location")
-        #     }
-        #     filtered_events.append(filtered_event)
-            
-        # return filtered_events
         return events
     except HttpError as error:
         raise HTTPException(status_code=400, detail=str(error))
@@ -67,14 +53,6 @@ def get_event(event_id: str):
     try:
         service = get_calendar_service()
         event = service.events().get(calendarId="primary", eventId=event_id).execute()
-        filtered_event = {
-                "id": event.get("id"),
-                "summary": event.get("summary"),
-                "start": event.get("start", {}).get("dateTime", event.get("start", {}).get("date")),
-                "end": event.get("end", {}).get("dateTime", event.get("end", {}).get("date")),
-                "description": event.get("description"),
-                "location": event.get("location")
-            }
-        return filtered_event
+        return event
     except HttpError as error:
         raise HTTPException(status_code=400, detail=str(error))
