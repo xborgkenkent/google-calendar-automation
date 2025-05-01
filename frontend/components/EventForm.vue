@@ -1,55 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-import { Plus, Calendar, Clock, MapPin } from 'lucide-vue-next';
-import { generateDateTime } from '@/utils/dateTime';
-import type {CalendarEvent} from "~/types/Event";
-defineProps({ today: String });
-const emit = defineEmits(['event-created']);
-
-const eventData = ref<CalendarEvent>({
-  id: '',
-  summary: '',
-  start: {
-    dateTime: '',
-    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
-  },
-  end: {
-    dateTime: '',
-    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
-  },
-  description: '',
-  location: ''
-})
-const startDate = ref(''), startTime = ref('');
-const endDate = ref(''), endTime = ref('');
-const successMessage = ref('');
-
-const updateEndDateMin = () => {
-  if (startDate.value > endDate.value) endDate.value = startDate.value;
-};
-
-const handleSubmit = () => {
-  const startDT = generateDateTime(startDate.value, startTime.value);
-  const endDT = generateDateTime(endDate.value, endTime.value);
-
-  if (new Date(endDT) <= new Date(startDT)) {
-    alert('End time must be after start time');
-    return;
-  }
-
-  const newEvent = {
-    ...eventData.value,
-    id: Date.now().toString(),
-    start: { dateTime: startDT },
-    end: { dateTime: endDT }
-  };
-
-  emit('event-created', newEvent);
-  successMessage.value = 'Event added successfully!';
-  setTimeout(() => successMessage.value = '', 3000);
-};
-</script>
-
 <template>
   <form @submit.prevent="handleSubmit">
     <div class="mb-5">
@@ -162,6 +110,64 @@ const handleSubmit = () => {
   </form>
 </template>
 
-<style scoped>
+<script setup lang="ts">
+import { ref } from 'vue'
+import { Plus, Calendar, Clock, MapPin } from 'lucide-vue-next'
+import { generateDateTime } from '~/utils/dateTime'
+import type {CalendarEvent} from "~/types/Event"
+defineProps({ today: String })
+const emit = defineEmits(['event-created'])
 
-</style>
+// get user's timezone once
+const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+
+const eventData = ref<CalendarEvent>({
+  id: '',
+  summary: '',
+  start: {
+    dateTime: '',
+    timeZone: userTimeZone
+  },
+  end: {
+    dateTime: '',
+    timeZone: userTimeZone
+  },
+  description: '',
+  location: ''
+})
+
+const startDate = ref(''), startTime = ref('')
+const endDate = ref(''), endTime = ref('')
+const successMessage = ref('')
+
+const updateEndDateMin = () => {
+  if (startDate.value > endDate.value) endDate.value = startDate.value
+};
+
+const handleSubmit = () => {
+  const startDT = generateDateTime(startDate.value, startTime.value)
+  const endDT = generateDateTime(endDate.value, endTime.value)
+
+  if (new Date(endDT) <= new Date(startDT)) {
+    alert('End time must be after start time')
+    return
+  }
+
+  const newEvent: CalendarEvent = {
+    ...eventData.value,
+    id: Date.now().toString(),
+    start: {
+      dateTime: startDT,
+      timeZone: userTimeZone
+    },
+    end: {
+      dateTime: endDT,
+      timeZone: userTimeZone
+    }
+  };
+
+  emit('event-created', newEvent)
+  successMessage.value = 'Event added successfully!'
+  setTimeout(() => successMessage.value = '', 3000);
+};
+</script>
