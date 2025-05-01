@@ -11,6 +11,7 @@ from google.oauth2.credentials import Credentials
 
 router = APIRouter()
 
+# in memory storage only for demo
 creds_store = {}
 flow_store = {}
 
