@@ -74,7 +74,13 @@ This guide will walk you through the process in the Google Cloud Console. After 
     pnpm install
     ```
 
-3.  **Run the Nuxt.js development server:**
+3.  **After the installation completes, copy the example environment file:**
+
+    ```bash
+    cp example.env .env
+    ```
+
+4.  **Run the Nuxt.js development server:**
 
     ```bash
     npm run dev
