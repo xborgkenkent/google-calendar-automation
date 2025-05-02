@@ -1,7 +1,4 @@
-![image](https://github.com/user-attachments/assets/7ea5e76c-1902-403d-a606-aacb5f2ef690)
-
-![image](https://github.com/user-attachments/assets/6db557e5-a611-4440-8ca8-167b7cd9cb77)
-
+[![Watch the video](https://github.com/user-attachments/assets/7ea5e76c-1902-403d-a606-aacb5f2ef690)](https://drive.google.com/file/d/12uU9R0mx3HB5UiaVsPIspeDEUB4NtDEx/view?usp=sharing)
 
 # Setup Instructions
 
