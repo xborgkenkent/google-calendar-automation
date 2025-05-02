@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app import google_oauth
 from app.api.google_routes import router as google_router
-
+from app.api.openai_routes import router as openai_router
 app = FastAPI()
 
 origins = [
@@ -20,3 +20,4 @@ app.add_middleware(
 
 app.include_router(google_oauth.router, prefix="/api/google", tags=["Google OAuth"])
 app.include_router(google_router, prefix="/api/google", tags=["Google API"])
+app.include_router(openai_router, prefix="/api/openai", tags=["OpenAI"])
