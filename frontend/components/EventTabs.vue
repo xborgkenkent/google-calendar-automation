@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const props = defineProps({ activeTab: String })
 const tabClass = (tab) => {
   return `flex-1 py-4 px-6 text-center font-medium ${
