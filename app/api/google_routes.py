@@ -1,58 +1,35 @@
-from fastapi import APIRouter, HTTPException, Body
-from googleapiclient.errors import HttpError
+from fastapi import APIRouter, Body
 from app.models.google_models import EventCreate, EventUpdate
-from app.services.google_services import get_calendar_service, get_tasks_service
+from app.services.google_services import (
+    list_calendar_events,
+    create_calendar_event,
+    get_calendar_event,
+    update_calendar_event,
+    delete_calendar_event
+)
 
 router = APIRouter()
 
-
 @router.get("/events")
 def list_events():
-    try:
-        service = get_calendar_service()
-        result = service.events().list(calendarId="primary", maxResults=10, singleEvents=True, orderBy="startTime").execute()
-        events = result.get("items", [])
-        return events
-    except HttpError as error:
-        raise HTTPException(status_code=400, detail=str(error))
+    return list_calendar_events()
 
 @router.post("/events")
 def create_event(event: EventCreate = Body(...)):
-    try:
-        service = get_calendar_service()
-        return service.events().insert(calendarId="primary", body=event.dict()).execute()
-    except HttpError as error:
-        raise HTTPException(status_code=400, detail=str(error))
-
-@router.put("/events/{event_id}")
-def update_event(event_id: str, event: EventUpdate = Body(...)):
-    try:
-        service = get_calendar_service()
-        existing_event = service.events().get(calendarId="primary", eventId=event_id).execute()
-        for key, value in event.dict(exclude_unset=True).items():
-            existing_event[key] = value
-        return service.events().update(calendarId="primary", eventId=event_id, body=existing_event).execute()
-    except HttpError as error:
-        raise HTTPException(status_code=400, detail=str(error))
-
-@router.patch("/events/{event_id}")
-def partial_update_event(event_id: str, event: EventUpdate = Body(...)):
-    return update_event(event_id, event)
-
-@router.delete("/events/{event_id}")
-def delete_event(event_id: str):
-    try:
-        service = get_calendar_service()
-        service.events().delete(calendarId="primary", eventId=event_id).execute()
-        return {"status": "success", "message": f"Event {event_id} deleted"}
-    except HttpError as error:
-        raise HTTPException(status_code=400, detail=str(error))
+    return create_calendar_event(event.dict())
 
 @router.get("/events/{event_id}")
 def get_event(event_id: str):
-    try:
-        service = get_calendar_service()
-        event = service.events().get(calendarId="primary", eventId=event_id).execute()
-        return event
-    except HttpError as error:
-        raise HTTPException(status_code=400, detail=str(error))
+    return get_calendar_event(event_id)
+
+@router.put("/events/{event_id}")
+def update_event(event_id: str, event: EventUpdate = Body(...)):
+    return update_calendar_event(event_id, event.dict(exclude_unset=True))
+
+@router.patch("/events/{event_id}")
+def partial_update_event(event_id: str, event: EventUpdate = Body(...)):
+    return update_calendar_event(event_id, event.dict(exclude_unset=True))
+
+@router.delete("/events/{event_id}")
+def delete_event(event_id: str):
+    return delete_calendar_event(event_id)
