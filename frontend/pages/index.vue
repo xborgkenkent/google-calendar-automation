@@ -6,6 +6,12 @@
           <Calendar :size="24" class="mr-2" />
           Smart Calendar Assistant
         </h1>
+        <button
+            class="text-lg font-bold flex items-center bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white p-2 rounded-md"
+            @click="openModal" >
+          <Sparkles :size="24" class="mr-2 text-yellow-300" />
+          AI Assistant
+        </button>
       </div>
       <p class="text-blue-100 mt-1">Simplify your scheduling with automated calendar integration</p>
     </div>
@@ -43,18 +49,28 @@
         />
       </div>
     </div>
+    <Modal
+        :isOpen="showModal"
+        @close="closeModal"
+        @submit="handleSubmit"
+        title="Enter Event"
+        buttonText="Save"
+        placeholder="Enter event here..."
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { Calendar, Check } from 'lucide-vue-next'
+import { Calendar, Check, Sparkles } from 'lucide-vue-next'
 import type { CalendarEvent } from '~/types/Event'
 
 const config = useRuntimeConfig()
-const { events, addEvent, deleteEvents } = useEvents()
+const { events, deleteEvents, deleteAllEvents } = useEvents()
 const successMessage = ref('')
 const activeTab = ref('upcoming')
+
+const showModal = ref(false)
+const lastSubmitted = ref('')
 
 const today = computed(() => {
   return new Date().toISOString().split('T')[0]
@@ -69,13 +85,13 @@ const filteredEvents = computed(() => {
 })
 
 const handleEventCreated = async (newEvent: CalendarEvent) => {
-  addEvent(newEvent)
   await useFetch(`${config.public.baseUrl}/api/google/events`, {
     body: JSON.stringify(newEvent),
     credentials: "include",
     method: 'POST',
   })
-
+  deleteAllEvents()
+  await fetchEvents()
   successMessage.value = 'Event successfully created!'
   setTimeout(() => successMessage.value = '', 3000)
 }
@@ -84,6 +100,7 @@ const fetchEvents = async () => {
   const data = await $fetch<CalendarEvent[]>(`${config.public.baseUrl}/api/google/events`, {
     credentials: "include",
   })
+  deleteAllEvents()
   events.value.push(...data)
 }
 
@@ -98,4 +115,25 @@ const deleteEvent = async (id: string) => {
     method: "DELETE",
   })
 }
+
+const openModal = () => {
+  showModal.value = true
+};
+
+const closeModal = () => {
+  showModal.value = false
+};
+
+const handleSubmit = async (value) => {
+  lastSubmitted.value = value
+  await useFetch(`${config.public.baseUrl}/api/openai/generates`, {
+    body: JSON.stringify({"val": value}),
+    credentials: "include",
+    method: 'POST',
+  })
+  closeModal()
+  deleteAllEvents()
+  await fetchEvents()
+};
+
 </script>
