@@ -32,8 +32,13 @@ This guide will walk you through the process in the Google Cloud Console. After 
         ```bash
         source env/bin/activate
         ```
+3.  **After the installation completes, copy the example environment file:**
 
-3.  **Install the required Python packages:**
+    ```bash
+    cp example.env .env
+    ```
+
+4.  **Install the required Python packages:**
 
     ```bash
     pip install fastapi uvicorn google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client
