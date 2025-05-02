@@ -2,7 +2,8 @@
 
 [Demo video](https://drive.google.com/file/d/12uU9R0mx3HB5UiaVsPIspeDEUB4NtDEx/view?usp=sharing)
 
-# Tech Stack: Python, FastAPI, Nuxt, Vue, Google Calendar API, OpenAI API
+# Tech Stack: 
+Python, FastAPI, Nuxt, Vue, Google Calendar API, OpenAI API
 
 # Setup Instructions
 
