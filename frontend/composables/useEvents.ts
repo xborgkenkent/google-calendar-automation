@@ -19,5 +19,8 @@ export default function useEvents() {
         }
     }
 
-    return { events, addEvent, updateEvent, deleteEvents };
+    const deleteAllEvents = () => {
+        events.value = []
+    }
+    return { events, addEvent, updateEvent, deleteEvents, deleteAllEvents };
 }
