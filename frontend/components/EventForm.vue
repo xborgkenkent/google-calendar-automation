@@ -111,7 +111,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { Plus, Calendar, Clock, MapPin } from 'lucide-vue-next'
 import { generateDateTime } from '~/utils/dateTime'
 import type {CalendarEvent} from "~/types/Event"
