@@ -1,4 +1,4 @@
-![Watch the video](https://github.com/user-attachments/assets/7ea5e76c-1902-403d-a606-aacb5f2ef690)
+![Watch the video](https://github.com/user-attachments/assets/96d58efe-4e21-4cfa-afeb-35ca78d9a3a4)
 
 [Demo video](https://drive.google.com/file/d/12uU9R0mx3HB5UiaVsPIspeDEUB4NtDEx/view?usp=sharing)
 
