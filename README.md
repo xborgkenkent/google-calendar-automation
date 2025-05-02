@@ -1,4 +1,6 @@
-[![Watch the video](https://github.com/user-attachments/assets/7ea5e76c-1902-403d-a606-aacb5f2ef690)](https://drive.google.com/file/d/12uU9R0mx3HB5UiaVsPIspeDEUB4NtDEx/view?usp=sharing)
+![Watch the video](https://github.com/user-attachments/assets/7ea5e76c-1902-403d-a606-aacb5f2ef690)
+
+[Demo video](https://drive.google.com/file/d/12uU9R0mx3HB5UiaVsPIspeDEUB4NtDEx/view?usp=sharing)
 
 # Setup Instructions
 
