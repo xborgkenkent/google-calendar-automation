@@ -90,8 +90,7 @@ const handleEventCreated = async (newEvent: CalendarEvent) => {
     credentials: "include",
     method: 'POST',
   })
-  deleteAllEvents()
-  await fetchEvents()
+  events.value.push(newEvent)
   successMessage.value = 'Event successfully created!'
   setTimeout(() => successMessage.value = '', 3000)
 }
@@ -118,11 +117,11 @@ const deleteEvent = async (id: string) => {
 
 const openModal = () => {
   showModal.value = true
-};
+}
 
 const closeModal = () => {
   showModal.value = false
-};
+}
 
 const handleSubmit = async (value) => {
   lastSubmitted.value = value
@@ -134,6 +133,6 @@ const handleSubmit = async (value) => {
   closeModal()
   deleteAllEvents()
   await fetchEvents()
-};
+}
 
 </script>

@@ -76,7 +76,7 @@ const props = defineProps({
     type: String,
     default: 'Submit'
   }
-});
+})
 
 const emit = defineEmits(['close', 'submit'])
 
@@ -84,16 +84,16 @@ const inputValue = ref('')
 
 const close = () => {
   emit('close')
-};
+}
 
 const closeOnBackdrop = (event) => {
   if (props.closeOnOutsideClick) {
     close()
   }
-};
+}
 
 const handleSubmit = () => {
   emit('submit', inputValue.value)
   inputValue.value = ''
-};
+}
 </script>

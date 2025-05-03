@@ -141,7 +141,7 @@ const successMessage = ref('')
 
 const updateEndDateMin = () => {
   if (startDate.value > endDate.value) endDate.value = startDate.value
-};
+}
 
 const handleSubmit = () => {
   const startDT = generateDateTime(startDate.value, startTime.value)
@@ -163,10 +163,11 @@ const handleSubmit = () => {
       dateTime: endDT,
       timeZone: userTimeZone
     }
-  };
+  }
 
   emit('event-created', newEvent)
   successMessage.value = 'Event added successfully!'
-  setTimeout(() => successMessage.value = '', 3000);
-};
+  setTimeout(() => successMessage.value = '', 3000)
+}
+
 </script>
