@@ -5,8 +5,8 @@ from fastapi import APIRouter, HTTPException, Body
 from dotenv import load_dotenv
 import os
 from openai import OpenAI
-from app.services.google_services import create_calendar_event
-from app.models.openai_models import EventRequest
+from services.google_services import create_calendar_event
+from models.openai_models import EventRequest
 
 load_dotenv()
 

@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app import google_oauth
-from app.api.google_routes import router as google_router
-from app.api.openai_routes import router as openai_router
+import google_oauth
+from api.google_routes import router as google_router
+from api.openai_routes import router as openai_router
 app = FastAPI()
 
 origins = [

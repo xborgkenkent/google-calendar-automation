@@ -1,5 +1,5 @@
 import os
-os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"  # Must be set before imports
+os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
 from fastapi import APIRouter, Request, HTTPException
 from fastapi.responses import RedirectResponse, HTMLResponse

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Body
-from app.models.google_models import EventCreate, EventUpdate
-from app.services.google_services import (
+from models.google_models import EventCreate, EventUpdate
+from services.google_services import (
     list_calendar_events,
     create_calendar_event,
     get_calendar_event,

@@ -6,3 +6,6 @@ google-auth-httplib2
 google-api-python-client
 python-multipart
 httpx
+openai
+pydantic
+python-dotenv

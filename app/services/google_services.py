@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from app.google_oauth import get_credentials
+from google_oauth import get_credentials
 
 def get_calendar_service():
     credentials = get_credentials()
