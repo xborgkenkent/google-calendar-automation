@@ -125,7 +125,7 @@ const closeModal = () => {
 
 const handleSubmit = async (value) => {
   lastSubmitted.value = value
-  await useFetch(`${config.public.baseUrl}/api/openai/generates`, {
+  await useFetch(`${config.public.baseUrl}/api/openai/events/generate`, {
     body: JSON.stringify({"val": value}),
     credentials: "include",
     method: 'POST',

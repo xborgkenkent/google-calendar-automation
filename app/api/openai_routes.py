@@ -1,70 +1,28 @@
-
-import re
-import json
 from fastapi import APIRouter, HTTPException, Body
-from dotenv import load_dotenv
-import os
-from openai import OpenAI
+from models.openai_models import EventRequest, EventResponse
+from services.openai_services import generate_event_from_text, transform_to_calendar_format
 from services.google_services import create_calendar_event
-from models.openai_models import EventRequest
 
-load_dotenv()
+router = APIRouter(tags=["ai"])
 
-router = APIRouter()
-apikey = os.environ.get("OPENAI_API_KEY")
-client = OpenAI(api_key=apikey)
-
-DEFAULT_TIMEZONE = "Asia/Manila"
-
-def transform_to_calendar_format(raw_data: dict) -> dict:
-    return {
-        "summary": raw_data.get("summary", ""),
-        "start": {
-            "dateTime": raw_data.get("start", ""),
-            "timeZone": DEFAULT_TIMEZONE
-        },
-        "end": {
-            "dateTime": raw_data.get("end", ""),
-            "timeZone": DEFAULT_TIMEZONE
-        },
-        "description": raw_data.get("description", ""),
-        "location": raw_data.get("location", "")
-    }
-    
-@router.post("/generates")
-async def generate_event(event: EventRequest = Body(...)):
-    """Get event summary"""
+@router.post("/events/generate", response_model=EventResponse)
+async def generate_and_create_event(request: EventRequest = Body(...)):
+    """Generate event details from natural language and create in Google Calendar"""
     try:
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
-                {
-                    "role": "assistant",
-                    "content": (
-                        "You are a google calendar assistant. JSON output should be: "
-                        "{\"summary\": \"the event title\"}, "
-                        "{\"description\": \"the event description\"}, "
-                        "{\"start\": \"the start time\" //ex: 2025-05-02T21:00:00+08:00 }, "
-                        "{\"end\": \"the end time\" //ex: 2025-05-02T23:00:00+08:00}, "
-                        "{\"location\": \"the event location\"}"
-                    )
-                },
-                {"role": "user", "content": event.val},
-            ],
-        )
-        content = response.choices[0].message.content
-
-        match = re.search(r"```json\s*({[\s\S]*?})\s*```", content)
-        if not match:
-            match = re.search(r"({[\s\S]*?})", content)
+        raw_event_data = await generate_event_from_text(request.val)
+        calendar_event_data = transform_to_calendar_format(raw_event_data)
+        created_event = create_calendar_event(calendar_event_data)
         
-        if not match:
-            raise ValueError("JSON object not found in response.")
-
-        extracted_json = json.loads(match.group(1))
-        transformed = transform_to_calendar_format(extracted_json)
-        create_calendar_event(transformed)
-        return transformed
-
+        return EventResponse(
+            id=created_event.get("id", ""),
+            summary=created_event.get("summary", ""),
+            description=created_event.get("description", ""),
+            start=created_event.get("start", {}).get("dateTime", ""),
+            end=created_event.get("end", {}).get("dateTime", ""),
+            location=created_event.get("location", "")
+        )
+        
+    except HTTPException as e:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"Failed to create event: {str(e)}")

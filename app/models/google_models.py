@@ -1,16 +1,17 @@
 from pydantic import BaseModel
 from typing import Optional
 
-class EventCreate(BaseModel):
+class EventRequest(BaseModel):
     summary: str
     start: dict
     end: dict
     description: Optional[str] = None
     location: Optional[str] = None
 
-class EventUpdate(BaseModel):
-    summary: Optional[str] = None
-    start: Optional[dict] = None
-    end: Optional[dict] = None
+class EventResponse(BaseModel):
+    id: str
+    summary: str
     description: Optional[str] = None
+    start: dict
+    end: dict
     location: Optional[str] = None
