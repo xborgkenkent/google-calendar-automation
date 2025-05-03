@@ -9,12 +9,6 @@ def get_calendar_service():
         raise HTTPException(status_code=401, detail="Not authorized")
     return build("calendar", "v3", credentials=credentials)
 
-def get_tasks_service():
-    credentials = get_credentials()
-    if not credentials:
-        raise HTTPException(status_code=401, detail="Not authorized")
-    return build("tasks", "v1", credentials=credentials)
-
 # Calendar event functions
 def list_calendar_events(max_results=10):
     """List events from primary calendar"""
@@ -34,7 +28,6 @@ def create_calendar_event(event_data):
     """Create a new event in primary calendar"""
     try:
         service = get_calendar_service()
-        print(event_data)
         return service.events().insert(calendarId="primary", body=event_data).execute()
     except HttpError as error:
         raise HTTPException(status_code=400, detail=str(error))
