@@ -18,6 +18,7 @@ This guide will walk you through the process in the Google Cloud Console. After 
 1.  **Create a virtual environment (recommended):**
 
     ```bash
+    cd app
     python -m venv env
     ```
 
@@ -49,10 +50,10 @@ This guide will walk you through the process in the Google Cloud Console. After 
 4.  **Run the FastAPI application:**
 
     ```bash
-    uvicorn app.main:app --reload
+    uvicorn main:app --reload
     ```
 
-    * `app.main:app`:  Specifies the module (`app.main`) and the application object (`app`) within that module.
+    * `main:app`:  Specifies the module (`main`) and the application object (`app`) within that module.
     * `--reload`: Enables automatic reloading of the server when you make code changes, which is very useful during development.
 
 ## Frontend Setup (Nuxt.js)
