@@ -21,7 +21,10 @@ CLIENT_SECRETS_FILE = current_dir / "credentials.json"
 SCOPES = [
     'https://www.googleapis.com/auth/calendar.readonly',
     'https://www.googleapis.com/auth/calendar',
-    'https://www.googleapis.com/auth/tasks'
+    'https://www.googleapis.com/auth/tasks',
+    'https://www.googleapis.com/auth/gmail.readonly'
+    
+    
 ]
 REDIRECT_URI = "http://127.0.0.1:8000/api/google/callback/"
 

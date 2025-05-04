@@ -9,3 +9,4 @@ httpx
 openai
 pydantic
 python-dotenv
+beautifulsoup4
