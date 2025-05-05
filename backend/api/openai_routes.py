@@ -14,12 +14,13 @@ router = APIRouter()
 api_key = os.environ.get("OPENAI_API_KEY")
 client = OpenAI(api_key=api_key)
 
-@router.post("/generates")
+@router.post("/events/generate")
 async def generate_event(event: EventRequest = Body(...)):
     """Get event summary"""
     try:
+        print(f"Received event data: {event.val}")
         transformed = await generate_event_from_text(event.val)
-        create_calendar_event(transformed)
+        await create_calendar_event(transformed)
         return transformed
 
     except Exception as e:
