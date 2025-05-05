@@ -105,3 +105,10 @@ This guide will walk you through the process in the Google Cloud Console. After 
     ```bash
     pnpm dev
     ```
+
+# For google authentication
+
+**Hit the endpoint for manual authentication**
+```bash
+http://127.0.0.1:8000/api/google/init
+```
