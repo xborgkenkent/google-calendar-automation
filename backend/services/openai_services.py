@@ -61,8 +61,9 @@ async def generate_event_from_text(text: str) -> Dict[str, Any]:
             raise ValueError("Event start time is required")
         if not event_data.get("end"):
             raise ValueError("Event end time is required")
-            
-        return event_data
+
+        extracted_json = transform_to_calendar_format(event_data)
+        return extracted_json
         
     except OpenAIError as e:
         logger.error(f"OpenAI API error: {str(e)}")
