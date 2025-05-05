@@ -49,7 +49,7 @@ def list_calendar_events(max_results=10, time_min=None):
         logger.error(f"Unexpected error in list_calendar_events: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal server error")
 
-def create_calendar_event(event_data):
+async def create_calendar_event(event_data):
     """Create a new event in primary calendar"""
     if not event_data.get("summary"):
         raise HTTPException(status_code=400, detail="Event summary is required")
